@@ -1,0 +1,17 @@
+// Downloaded data for organism DG30 from GoogleDrive storage.
+gdown.pl https://drive.google.com/open?id=11Q_96B2npfeepkUTQsliiOe5ozw6GFbt DG30_R1.fastq.gz
+gdown.pl https://drive.google.com/open?id=1gdcxU3rxkQjuvpMdqxZ4-6vdpjkBDeND DG30_R2.fastq.gz
+
+// Performed quality check on initial data
+fastqc DG30_R1.fastq.gz 
+fastqc DG30_R2.fastq.gz 
+
+// Performed quality trimming on data.
+cutadapt -q 20,20 -a CTGTCTCTTATACACATCTCCGAGCCCACGAGAC -A CTGTCTCTTATACACATCTGACGCTGCCGACGA -m 50 --max-n 0 -o DG30_R1.cutadapt.fastq -p DG30_R2.cutadapt.fastq DG30_R1.fastq.gz DG30_R2.fastq.gz
+
+// Performed de_novo assembly of trimmed data.
+conda activate de_novo
+spades.py -k 21,51,71,91,111,127 --careful --pe1-1 DG30_R1.cutadapt.fastq --pe1-2 DG30_R2.cutadapt.fastq -o DG30_spades_output
+
+// Obtained quality report for DG30 genome assembly.
+quast contigs.fasta -o Quast_contigs
