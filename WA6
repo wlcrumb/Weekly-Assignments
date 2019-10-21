@@ -8,4 +8,4 @@ wget https://github.com/stechtmann/BL4300-5300/raw/master/data/Weekly_Assignment
 makeblastdb -in Unk_therm.faa -dbtype prot -title Unk_therm_proteins
 
 // BLAST the query data against the unknown thermophile database. Outputs a text file containing the BLAST results.
-blastp -db Unk_therm_proteins -query HSP_prot.fasta -out HSP_prot_BLAST.txt -outfmt 7
+blastp -db Unk_therm.faa -query HSP_prot.fasta -out HSP_prot_BLAST.txt -outfmt 7
